@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:todo/utils/constants.dart';
 
-class TodayTaskView extends StatelessWidget {
-  const TodayTaskView({Key? key}) : super(key: key);
+class TodayTaskTile extends StatelessWidget {
+  TodayTaskTile({Key? key, required this.index}) : super(key: key);
+
+  final int index;
+  final List<Color> colors = [
+    Colors.pink,
+    Colors.amber,
+    Colors.green,
+    Colors.blue,
+    Colors.blueGrey,
+    Colors.purple,
+    Colors.teal,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +23,7 @@ class TodayTaskView extends StatelessWidget {
       margin: const EdgeInsets.only(left: 20),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.pink,
+        color: colors[index].withOpacity(0.5),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(

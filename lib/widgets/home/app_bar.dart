@@ -13,10 +13,7 @@ class MyAppBar extends StatelessWidget {
           radius: 25,
           child: Icon(Icons.menu_outlined),
         ),
-        Text(
-          'Todo App',
-          style: kTextStyleBold24,
-        ),
+        Text('Todo App', style: kTextStyleBoldBlack(24)),
         const CircleAvatar(
           radius: 25,
           child: Icon(Icons.person),

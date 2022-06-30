@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/constants.dart';
+import '../../utils/constants.dart';
 
 class TaskStatusContainer extends StatelessWidget {
   const TaskStatusContainer(
@@ -39,8 +39,8 @@ class TaskStatusContainer extends StatelessWidget {
             ),
             child: Icon(iconData, color: color, size: 30),
           ),
-          kVerticalSpace10,
-          Text(label, style: kTextStyleBold18)
+          kVerticalSpace(10),
+          Text(label, style: kTextStyleBoldBlack(18))
         ],
       ),
     );
