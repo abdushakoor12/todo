@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo/views/create_task_page.dart';
+import 'package:todo/utils/routes.dart';
 import '../custom_button.dart';
 
 class AllTaskHeader extends StatelessWidget {
@@ -19,7 +19,9 @@ class AllTaskHeader extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
           ),
           child: IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () {
+              Get.offAllNamed(MyRoutes.getHomeRoute());
+            },
             icon: const Icon(
               Icons.arrow_back,
               size: 28,
@@ -28,10 +30,8 @@ class AllTaskHeader extends StatelessWidget {
         ),
         CustomButton(
           onTap: () {
-            Get.to(
-              () => CreateTaskPage(),
-              transition: Transition.zoom,
-              duration: const Duration(milliseconds: 500),
+            Get.toNamed(
+              MyRoutes.getCreateTaskRoute(),
             );
           },
           label: 'Add Task',

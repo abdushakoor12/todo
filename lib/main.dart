@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:todo/db/db_helper.dart';
+import 'package:todo/utils/routes.dart';
 import 'package:todo/views/home_page.dart';
 
 void main() async {
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
-      home: HomePage(),
+      initialRoute: MyRoutes.getHomeRoute(),
+      getPages: MyRoutes.routes,
     );
   }
 }

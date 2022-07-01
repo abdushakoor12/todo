@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:todo/controllers/task_controller.dart';
 import 'package:todo/models/task_model.dart';
 import 'package:todo/utils/constants.dart';
+import 'package:todo/utils/routes.dart';
 import 'package:todo/views/all_tasks_page.dart';
 import 'package:todo/widgets/create_task/custom_text_field.dart';
 import '../widgets/create_task/create_task_header.dart';
@@ -91,18 +92,16 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         'Task successfully saved',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
+        colorText: Colors.white,
       );
-      Get.to(
-        () => AllTasksPage(),
-        transition: Transition.zoom,
-        duration: const Duration(milliseconds: 500),
-      );
+      Get.offAllNamed(MyRoutes.getAllTasksPageRoute());
     } else {
       Get.snackbar(
         'Empty field',
         'Task title and description can\'t be empty',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
+        colorText: Colors.white,
       );
     }
   }

@@ -1,10 +1,12 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/views/task_detail.dart';
 import 'package:todo/widgets/all_tasks/all_task_header.dart';
 import '../controllers/task_controller.dart';
+import '../utils/routes.dart';
 import '../widgets/all_tasks/task_tile.dart';
 
 class AllTasksPage extends StatefulWidget {
@@ -55,18 +57,20 @@ class _AllTasksPageState extends State<AllTasksPage> {
           itemCount: tasks.length,
           itemBuilder: (ctx, index) {
             final task = tasks[index];
-            //print(tasks.length);
-            return InkWell(
-              borderRadius: BorderRadius.circular(16),
-              onTap: () {
-                Get.to(
-                  () => TaskDetail(task: task),
-                  transition: Transition.zoom,
-                  duration: const Duration(milliseconds: 500),
-                );
-              },
-              child: TaskTile(task: task),
-            );
+            final selectedDate = DateFormat.yMd().format(_selectedDate);
+            if (task.date == selectedDate) {
+              return InkWell(
+                borderRadius: BorderRadius.circular(16),
+                onTap: () {
+                  Get.toNamed(
+                    MyRoutes.getDetailRoute(),
+                    arguments: {'task': task},
+                  );
+                },
+                child: TaskTile(task: task),
+              );
+            }
+            return Container();
           },
         );
       },
@@ -94,7 +98,9 @@ class _AllTasksPageState extends State<AllTasksPage> {
         dayTextStyle: kTextStyleBoldBlack(16),
         dateTextStyle: kTextStyleBoldBlack(18),
         onDateChange: (selectedDate) {
-          _selectedDate = selectedDate;
+          setState(() {
+            _selectedDate = selectedDate;
+          });
         },
       ),
     );

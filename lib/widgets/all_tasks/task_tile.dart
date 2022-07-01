@@ -17,25 +17,22 @@ class TaskTile extends StatelessWidget {
           child: _customContainer(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      task.title.toString(),
-                      style: kTextStyleBoldBlack(20),
-                      softWrap: true,
-                    ),
-                    Text(task.time.toString(), style: kTextStyleBoldBlack(20)),
-                  ],
+                Text(
+                  task.title.toString(),
+                  style: kTextStyleBoldBlack(20),
+                  softWrap: false,
                 ),
                 Text(
                   task.description.toString(),
                   style: kTextStyleBoldGrey(16),
                   maxLines: 3,
                 ),
+                Text(task.time.toString(), style: kTextStyleBoldBlack(20)),
               ],
             ),
+            size: 0.8,
           ),
         ),
         const SizedBox(width: 2),
@@ -55,10 +52,10 @@ class TaskTile extends StatelessWidget {
     );
   }
 
-  Widget _customContainer({required Widget child, double? size}) {
+  Widget _customContainer({required Widget child, required double size}) {
     return Container(
       height: 160,
-      width: size == null ? Get.width : Get.width * size,
+      width: Get.width * size,
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(

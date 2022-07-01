@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:todo/models/task_model.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/widgets/custom_button.dart';
 import 'package:todo/widgets/task_detail/task_detail_header.dart';
 
-import '../models/task_model.dart';
-
 class TaskDetail extends StatelessWidget {
-  const TaskDetail({Key? key, required this.task}) : super(key: key);
-
-  final TaskModel task;
+  const TaskDetail({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final task = Get.arguments['task'] as TaskModel;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
