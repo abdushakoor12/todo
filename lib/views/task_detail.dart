@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/widgets/custom_button.dart';
+import 'package:todo/widgets/rounded_container.dart';
 import 'package:todo/widgets/task_detail/task_detail_header.dart';
 
 class TaskDetail extends StatelessWidget {
@@ -14,13 +15,12 @@ class TaskDetail extends StatelessWidget {
     Colors.green,
     Colors.blue,
     Colors.blueGrey,
-    Colors.pink,
+    Colors.pink
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colors[index],
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -38,6 +38,13 @@ class TaskDetail extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _customRow('26/07/2022', Icons.calendar_month_sharp),
+                  RoundedContainer(
+                    color: colors[index],
+                    child: const SizedBox(
+                      width: 20,
+                      height: 20,
+                    ),
+                  ),
                   _customRow('10:30PM', Icons.access_time_rounded),
                 ],
               ),

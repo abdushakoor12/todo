@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/views/task_detail.dart';
 import 'package:todo/widgets/all_tasks/all_task_header.dart';
+import 'package:todo/widgets/rounded_container.dart';
 import '../widgets/all_tasks/task_tile.dart';
 
 class AllTasksPage extends StatelessWidget {
@@ -58,15 +59,8 @@ class AllTasksPage extends StatelessWidget {
   }
 
   Widget _addDateBar() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.amber.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          width: 1,
-          color: Colors.amber.withOpacity(0.2),
-        ),
-      ),
+    return RoundedContainer(
+      color: Colors.amber.withOpacity(0.2),
       child: DatePicker(
         height: 120,
         width: 65,

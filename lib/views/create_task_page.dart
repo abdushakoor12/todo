@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/widgets/create_task/custom_text_field.dart';
-
 import '../widgets/create_task/create_task_header.dart';
 
 class CreateTaskPage extends StatefulWidget {
