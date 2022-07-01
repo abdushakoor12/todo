@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:todo/utils/constants.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({Key? key, this.onTap}) : super(key: key);
+  const CustomButton({Key? key, this.onTap, required this.label, this.iconData})
+      : super(key: key);
 
   final VoidCallback? onTap;
+  final String label;
+  final IconData? iconData;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +24,8 @@ class CustomButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.add),
-            Text('Add Task', style: kTextStyleBoldBlack(18))
+            if (iconData == null) Container() else Icon(iconData),
+            Text(label, style: kTextStyleBoldBlack(18))
           ],
         ),
       ),

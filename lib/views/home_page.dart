@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/views/all_tasks_page.dart';
+import 'package:todo/views/task_detail.dart';
 import 'package:todo/widgets/home/app_bar.dart';
 import 'package:todo/widgets/home/task_status.dart';
 import 'package:todo/widgets/home/today_task_tile.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,7 @@ class HomePage extends StatelessWidget {
                 ),
                 child: Center(
                   child: TextField(
+                    controller: _controller,
                     style: kTextStyleBoldBlack(22.0),
                     maxLines: 1,
                     autocorrect: false,
@@ -78,7 +81,11 @@ class HomePage extends StatelessWidget {
                   Text('Today\'s Tasks', style: kTextStyleBoldBlack(30)),
                   TextButton(
                     onPressed: () {
-                      Get.to(() => AllTasksPage(), transition: Transition.zoom);
+                      Get.to(
+                        () => AllTasksPage(),
+                        transition: Transition.zoom,
+                        duration: const Duration(milliseconds: 500),
+                      );
                     },
                     child: Text('See All', style: kTextStyleBoldGrey(18)),
                   )
@@ -90,7 +97,17 @@ class HomePage extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: 4,
                   itemBuilder: (ctx, index) {
-                    return TodayTaskTile(index: index);
+                    return InkWell(
+                      borderRadius: BorderRadius.circular(16),
+                      onTap: () {
+                        Get.to(
+                          () => TaskDetail(index: index),
+                          transition: Transition.zoom,
+                          duration: const Duration(milliseconds: 500),
+                        );
+                      },
+                      child: TodayTaskTile(index: index),
+                    );
                   },
                 ),
               ),

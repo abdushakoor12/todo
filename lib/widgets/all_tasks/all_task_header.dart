@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo/views/create_task_page.dart';
 import '../custom_button.dart';
 
 class AllTaskHeader extends StatelessWidget {
@@ -26,7 +27,15 @@ class AllTaskHeader extends StatelessWidget {
           ),
         ),
         CustomButton(
-          onTap: () {},
+          onTap: () {
+            Get.to(
+              () => CreateTaskPage(),
+              transition: Transition.zoom,
+              duration: const Duration(milliseconds: 500),
+            );
+          },
+          label: 'Add Task',
+          iconData: Icons.add,
         ),
       ],
     );
