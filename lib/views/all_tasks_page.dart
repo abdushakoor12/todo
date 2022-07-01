@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/utils/constants.dart';
-import 'package:todo/views/task_detail.dart';
 import 'package:todo/widgets/all_tasks/all_task_header.dart';
 import '../controllers/task_controller.dart';
 import '../utils/routes.dart';

@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:todo/models/task_model.dart';
 import 'package:todo/views/all_tasks_page.dart';
 import 'package:todo/views/create_task_page.dart';
 import 'package:todo/views/home_page.dart';
