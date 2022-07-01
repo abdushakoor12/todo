@@ -9,9 +9,14 @@ class MyAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const CircleAvatar(
+        CircleAvatar(
           radius: 25,
-          child: Icon(Icons.menu_outlined),
+          child: IconButton(
+            onPressed: () {
+              print('Open Drawer Home page header');
+            },
+            icon: const Icon(Icons.menu_outlined),
+          ),
         ),
         Text('Todo App', style: kTextStyleBoldBlack(24)),
         const CircleAvatar(

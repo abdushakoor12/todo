@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:todo/db/db_helper.dart';
 import 'package:todo/views/home_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DBHelper.initDatabase();
   runApp(const MyApp());
 }
 

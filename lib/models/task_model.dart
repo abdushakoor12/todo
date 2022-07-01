@@ -4,7 +4,7 @@ class TaskModel {
   String? description;
   int? isDone;
   String? date;
-  String? startTime;
+  String? time;
   int? color;
 
   TaskModel({
@@ -13,7 +13,7 @@ class TaskModel {
     this.description,
     this.isDone,
     this.date,
-    this.startTime,
+    this.time,
     this.color,
   });
 
@@ -23,7 +23,7 @@ class TaskModel {
     description = json['description'];
     isDone = json['isDone'];
     date = json['date'];
-    startTime = json['startTime'];
+    time = json['time'];
     color = json['color'];
   }
 
@@ -34,7 +34,7 @@ class TaskModel {
     data['description'] = description;
     data['isDone'] = isDone;
     data['date'] = date;
-    data['startTime'] = startTime;
+    data['time'] = time;
     data['color'] = color;
     return data;
   }

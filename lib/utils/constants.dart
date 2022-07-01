@@ -53,3 +53,14 @@ TextStyle kTextStyleBoldWhite(double size) {
 }
 
 Widget kVerticalSpace(double height) => SizedBox(height: height);
+
+const List<Color> colors = [
+  Colors.pink,
+  Colors.purple,
+  Colors.amber,
+  Colors.orange,
+  Colors.teal,
+  Colors.green,
+  Colors.blue,
+  Colors.blueGrey,
+];

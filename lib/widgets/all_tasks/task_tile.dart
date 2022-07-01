@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:todo/models/task_model.dart';
 import '../../utils/constants.dart';
 
 class TaskTile extends StatelessWidget {
-  const TaskTile({Key? key, required this.color}) : super(key: key);
+  const TaskTile({Key? key, required this.task}) : super(key: key);
 
-  final Color color;
+  final TaskModel task;
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +22,15 @@ class TaskTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Team Meeting',
+                      task.title.toString(),
                       style: kTextStyleBoldBlack(20),
                       softWrap: true,
                     ),
-                    Text('12:00 PM', style: kTextStyleBoldBlack(20)),
+                    Text(task.time.toString(), style: kTextStyleBoldBlack(20)),
                   ],
                 ),
                 Text(
-                  'Group discussion for new product right now Group discussion for new product right now',
+                  task.description.toString(),
                   style: kTextStyleBoldGrey(16),
                   maxLines: 3,
                 ),
@@ -44,7 +44,7 @@ class TaskTile extends StatelessWidget {
             child: RotatedBox(
               quarterTurns: 3,
               child: Text(
-                'Progress',
+                task.isDone == 0 ? 'Progress' : 'Done',
                 style: kTextStyleBoldBlack(20),
               ),
             ),
@@ -62,7 +62,7 @@ class TaskTile extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
+        color: colors[task.color as int].withOpacity(0.2),
         borderRadius: BorderRadius.circular(16),
       ),
       child: child,

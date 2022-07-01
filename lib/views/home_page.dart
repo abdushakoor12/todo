@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
+import 'package:todo/models/task_model.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/views/all_tasks_page.dart';
 import 'package:todo/views/task_detail.dart';
@@ -7,12 +9,30 @@ import 'package:todo/widgets/home/app_bar.dart';
 import 'package:todo/widgets/home/task_status.dart';
 import 'package:todo/widgets/home/today_task_tile.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+import '../controllers/task_controller.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final TextEditingController _controller = TextEditingController();
+
+  final TaskController _taskController = Get.put(TaskController());
+
+  @override
+  void initState() {
+    _taskController.getAllTasks();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final tasks = _taskController.tasksList;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -28,7 +48,7 @@ class HomePage extends StatelessWidget {
                 style: kTextStyleBoldGrey(22.0),
               ),
               Text(
-                'You have 31 tasks\nthis month!',
+                'You have ${tasks.length} tasks\nthis month!',
                 style: kTextStyleBoldBlack(30),
               ),
               kVerticalSpace(30),
@@ -101,7 +121,7 @@ class HomePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                       onTap: () {
                         Get.to(
-                          () => TaskDetail(index: index),
+                          () => TaskDetail(task: TaskModel()),
                           transition: Transition.zoom,
                           duration: const Duration(milliseconds: 500),
                         );

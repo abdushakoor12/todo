@@ -1,15 +1,28 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/views/task_detail.dart';
 import 'package:todo/widgets/all_tasks/all_task_header.dart';
-import 'package:todo/widgets/rounded_container.dart';
+import '../controllers/task_controller.dart';
 import '../widgets/all_tasks/task_tile.dart';
 
-class AllTasksPage extends StatelessWidget {
-  AllTasksPage({Key? key}) : super(key: key);
+class AllTasksPage extends StatefulWidget {
+  const AllTasksPage({Key? key}) : super(key: key);
+
+  @override
+  State<AllTasksPage> createState() => _AllTasksPageState();
+}
+
+class _AllTasksPageState extends State<AllTasksPage> {
   DateTime _selectedDate = DateTime.now();
+  final TaskController _taskController = Get.put(TaskController());
+
+  @override
+  void initState() {
+    _taskController.getAllTasks();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,34 +36,7 @@ class AllTasksPage extends StatelessWidget {
               kVerticalSpace(30),
               _addDateBar(),
               kVerticalSpace(20),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 7,
-                itemBuilder: (ctx, index) {
-                  List<Color> colors = [
-                    Colors.purple,
-                    Colors.teal,
-                    Colors.amber,
-                    Colors.green,
-                    Colors.blue,
-                    Colors.blueGrey,
-                    Colors.pink,
-                  ];
-
-                  return InkWell(
-                    borderRadius: BorderRadius.circular(16),
-                    onTap: () {
-                      Get.to(
-                        () => TaskDetail(index: index),
-                        transition: Transition.zoom,
-                        duration: const Duration(milliseconds: 500),
-                      );
-                    },
-                    child: TaskTile(color: colors[index]),
-                  );
-                },
-              )
+              _displayTasks(),
             ],
           ),
         ),
@@ -58,9 +44,46 @@ class AllTasksPage extends StatelessWidget {
     );
   }
 
+  Widget _displayTasks() {
+    return Obx(
+      () {
+        final tasks = _taskController.tasksList;
+
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: tasks.length,
+          itemBuilder: (ctx, index) {
+            final task = tasks[index];
+            //print(tasks.length);
+            return InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () {
+                Get.to(
+                  () => TaskDetail(task: task),
+                  transition: Transition.zoom,
+                  duration: const Duration(milliseconds: 500),
+                );
+              },
+              child: TaskTile(task: task),
+            );
+          },
+        );
+      },
+    );
+  }
+
   Widget _addDateBar() {
-    return RoundedContainer(
-      color: Colors.amber.withOpacity(0.2),
+    return Container(
+      margin: const EdgeInsets.only(right: 8),
+      decoration: BoxDecoration(
+        color: Colors.amber.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          width: 1,
+          color: Colors.amber.withOpacity(0.2),
+        ),
+      ),
       child: DatePicker(
         height: 120,
         width: 65,

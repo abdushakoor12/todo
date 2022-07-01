@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import '../custom_button.dart';
 
 class CreateTaskHeader extends StatelessWidget {
-  const CreateTaskHeader({Key? key}) : super(key: key);
+  const CreateTaskHeader({Key? key, this.onSaved}) : super(key: key);
+
+  final VoidCallback? onSaved;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class CreateTaskHeader extends StatelessWidget {
           ),
         ),
         CustomButton(
-          onTap: () {},
+          onTap: onSaved,
           label: 'Save Task',
         ),
       ],

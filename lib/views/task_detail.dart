@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/widgets/custom_button.dart';
-import 'package:todo/widgets/rounded_container.dart';
 import 'package:todo/widgets/task_detail/task_detail_header.dart';
 
-class TaskDetail extends StatelessWidget {
-  TaskDetail({Key? key, required this.index}) : super(key: key);
+import '../models/task_model.dart';
 
-  final int index;
-  final List<Color> colors = [
-    Colors.purple,
-    Colors.teal,
-    Colors.amber,
-    Colors.green,
-    Colors.blue,
-    Colors.blueGrey,
-    Colors.pink
-  ];
+class TaskDetail extends StatelessWidget {
+  const TaskDetail({Key? key, required this.task}) : super(key: key);
+
+  final TaskModel task;
 
   @override
   Widget build(BuildContext context) {
@@ -30,22 +22,30 @@ class TaskDetail extends StatelessWidget {
               const TaskDetailHeader(),
               kVerticalSpace(25),
               Text(
-                'Title: Redesign Splash Screen',
+                task.title.toString(),
                 style: kTextStyleBlack(24),
               ),
               kVerticalSpace(25),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _customRow('26/07/2022', Icons.calendar_month_sharp),
-                  RoundedContainer(
-                    color: colors[index],
+                  _customRow(task.date.toString(), Icons.calendar_month_sharp),
+                  Container(
+                    margin: const EdgeInsets.only(right: 8),
+                    decoration: BoxDecoration(
+                      color: colors[task.color as int].withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        width: 1,
+                        color: colors[task.color as int],
+                      ),
+                    ),
                     child: const SizedBox(
                       width: 20,
                       height: 20,
                     ),
                   ),
-                  _customRow('10:30PM', Icons.access_time_rounded),
+                  _customRow(task.time.toString(), Icons.access_time_rounded),
                 ],
               ),
               kVerticalSpace(25),
@@ -54,18 +54,25 @@ class TaskDetail extends StatelessWidget {
                 style: kTextStyleBoldBlack(24),
               ),
               Text(
-                'You need to make a splash screen for the application.'
-                ' Style: minimalism. Use one primary color and one accent color.'
-                ' You ca use illustrations. 3D animations and other things to'
-                ' attract attention Splash Screen',
+                task.description.toString(),
                 style: kTextStyleBlack(18),
               ),
               kVerticalSpace(50),
               Row(
-                children: const [
-                  Expanded(child: CustomButton(label: 'Done')),
-                  SizedBox(width: 10),
-                  Expanded(child: CustomButton(label: 'In Progress')),
+                children: [
+                  Expanded(
+                    child: CustomButton(
+                      label: 'Done',
+                      color: Colors.green.withOpacity(0.3),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: CustomButton(
+                      label: 'Delete',
+                      color: Colors.red.withOpacity(0.3),
+                    ),
+                  ),
                 ],
               ),
             ],
