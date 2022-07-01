@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo/controllers/task_controller.dart';
 import 'package:todo/models/task_model.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/widgets/custom_button.dart';
 import 'package:todo/widgets/task_detail/task_detail_header.dart';
 
 class TaskDetail extends StatelessWidget {
-  const TaskDetail({Key? key}) : super(key: key);
+  TaskDetail({Key? key}) : super(key: key);
+  final TaskController _taskController = Get.find<TaskController>();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,14 @@ class TaskDetail extends StatelessWidget {
                   Expanded(
                     child: CustomButton(
                       label: 'Done',
-                      color: Colors.green.withOpacity(0.3),
+                      color: task.isDone == 1
+                          ? Colors.grey.withOpacity(0.3)
+                          : Colors.green.withOpacity(0.3),
+                      onTap: task.isDone == 1
+                          ? null
+                          : () {
+                              _taskController.updateTaskAsDone(task.id as int);
+                            },
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -71,6 +80,10 @@ class TaskDetail extends StatelessWidget {
                     child: CustomButton(
                       label: 'Delete',
                       color: Colors.red.withOpacity(0.3),
+                      onTap: () {
+                        _taskController.delete(task);
+                        Get.back();
+                      },
                     ),
                   ),
                 ],

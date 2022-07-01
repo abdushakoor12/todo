@@ -18,7 +18,7 @@ class MyRoutes {
   static List<GetPage> routes = [
     GetPage(
       name: _home,
-      page: () => const HomePage(),
+      page: () => HomePage(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 400),
     ),
@@ -36,7 +36,7 @@ class MyRoutes {
     ),
     GetPage(
       name: _taskDetail,
-      page: () => const TaskDetail(),
+      page: () => TaskDetail(),
       transition: Transition.zoom,
       transitionDuration: const Duration(milliseconds: 400),
     )

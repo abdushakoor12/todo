@@ -93,7 +93,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
-      Get.offAllNamed(MyRoutes.getAllTasksPageRoute());
+      Get.offNamed(MyRoutes.getAllTasksPageRoute());
     } else {
       Get.snackbar(
         'Empty field',

@@ -8,16 +8,11 @@ import 'package:todo/widgets/home/task_status.dart';
 import 'package:todo/widgets/home/today_task_tile.dart';
 import '../controllers/task_controller.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  HomePage({Key? key}) : super(key: key);
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   final TextEditingController _controller = TextEditingController();
-  //final TaskController _taskController = Get.put(TaskController());
+  final TaskController _taskController = Get.put(TaskController());
 
   @override
   Widget build(BuildContext context) {

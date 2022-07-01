@@ -20,7 +20,7 @@ class AllTaskHeader extends StatelessWidget {
           ),
           child: IconButton(
             onPressed: () {
-              Get.offAllNamed(MyRoutes.getHomeRoute());
+              Get.back();
             },
             icon: const Icon(
               Icons.arrow_back,

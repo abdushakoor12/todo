@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:todo/models/task_model.dart';
 
@@ -20,7 +21,6 @@ class DBHelper {
         path,
         version: _version,
         onCreate: (db, version) {
-          print("creating a new db");
           return db.execute(
             "CREATE TABLE $_tableName("
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -35,7 +35,9 @@ class DBHelper {
         },
       );
     } catch (error) {
-      print('Error to open DB: ${error.toString()}');
+      if (kDebugMode) {
+        print('Error to open DB: ${error.toString()}');
+      }
     }
   }
 
@@ -45,5 +47,17 @@ class DBHelper {
 
   static Future<List<Map<String, dynamic>>?> query() async {
     return await _db?.query(_tableName);
+  }
+
+  static Future<void> delete(TaskModel task) async {
+    await _db!.delete(_tableName, where: 'id=?', whereArgs: [task.id]);
+  }
+
+  static Future<void> update(int id) async {
+    await _db!.rawUpdate('''
+    UPDATE $_tableName
+    SET isDone = ?
+    WHERE id =?
+    ''', [1, id]);
   }
 }
