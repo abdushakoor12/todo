@@ -60,7 +60,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                     child: CustomTextField(
                       readOnly: true,
                       label: ('Time'),
-                      hintText: _formTimeOfDay(_selectedTime),
+                      hintText: formattingTimeOfDay(_selectedTime),
                       onTap: () {
                         _chooseTime();
                       },
@@ -86,14 +86,6 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     if (_titleController.text.isNotEmpty &&
         _descriptionController.text.isNotEmpty) {
       _createTask();
-      Get.snackbar(
-        'Task Saved',
-        'Task successfully saved',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-      Get.offNamed(MyRoutes.getAllTasksPageRoute());
     } else {
       Get.snackbar(
         'Empty field',
@@ -111,23 +103,19 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       description: _descriptionController.text.trim(),
       isDone: 0,
       date: DateFormat.yMd().format(_selectedDate),
-      time: _formTimeOfDay(_selectedTime),
+      time: formattingTimeOfDay(_selectedTime),
       color: _selectedColor,
     );
-    await _taskController.addTask(newTask);
-  }
-
-  String _formTimeOfDay(TimeOfDay timeOfDay) {
-    final now = DateTime.now();
-    final date = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      timeOfDay.hour,
-      timeOfDay.minute,
-    );
-    final format = DateFormat.jm();
-    return format.format(date);
+    await _taskController.addTask(newTask).then((value) => {
+          Get.snackbar(
+            'Task Saved',
+            'Task successfully saved',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          ),
+          Get.offAllNamed(MyRoutes.getHomeRoute())
+        });
   }
 
   _chooseTime() async {

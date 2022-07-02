@@ -14,7 +14,7 @@ class TodayTaskTile extends StatelessWidget {
       child: Container(
         width: 230,
         height: 200,
-        margin: const EdgeInsets.only(left: 20),
+        margin: const EdgeInsets.only(right: 20),
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: colors[task.color as int].withOpacity(0.5),

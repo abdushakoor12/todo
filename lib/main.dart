@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:todo/db/db_helper.dart';
+import 'package:todo/utils/constants.dart';
 import 'package:todo/utils/routes.dart';
 import 'package:todo/views/home_page.dart';
+
+import 'controllers/task_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/utils/routes.dart';
 import 'package:todo/widgets/home/app_bar.dart';
 import 'package:todo/widgets/home/task_status.dart';
 import 'package:todo/widgets/home/today_task_tile.dart';
 import '../controllers/task_controller.dart';
+import '../models/task_model.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -27,15 +27,21 @@ class HomePage extends StatelessWidget {
               const MyAppBar(),
               kVerticalSpace(40),
               Text(
-                'Good Morning, Bersyte!',
+                '${showGreeting()}, Bersyte!',
                 style: kTextStyleBoldGrey(22.0),
               ),
               GetX<TaskController>(
                 builder: (controller) {
-                  return Text(
-                    'You have ${controller.tasksLength} tasks\nthis month!',
-                    style: kTextStyleBoldBlack(30),
-                  );
+                  final tasks = controller.tasksList;
+                  for (var task in tasks) {
+                    changeTaskStatusAutomatically(task);
+                  }
+                  return tasks.isEmpty
+                      ? _doNotHaveTaskForMonth()
+                      : Text(
+                          'You have ${controller.tasksLength} tasks\nthis month!',
+                          style: kTextStyleBoldBlack(30),
+                        );
                 },
               ),
               kVerticalSpace(30),
@@ -63,22 +69,29 @@ class HomePage extends StatelessWidget {
               kVerticalSpace(30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   TaskStatusContainer(
                     label: 'To-Do',
                     iconData: Icons.assignment_rounded,
                     color: Colors.pink,
+                    onTap: () {
+                      _goToTasksByStatus('To-Do');
+                    },
                   ),
                   TaskStatusContainer(
-                    label: 'Progress',
-                    iconData: Icons.assignment_late_rounded,
-                    color: Colors.amber,
-                  ),
+                      label: 'Progress',
+                      iconData: Icons.assignment_late_rounded,
+                      color: Colors.amber,
+                      onTap: () {
+                        _goToTasksByStatus('In Progress');
+                      }),
                   TaskStatusContainer(
-                    label: 'Done',
-                    iconData: Icons.assignment_turned_in,
-                    color: Colors.green,
-                  ),
+                      label: 'Done',
+                      iconData: Icons.assignment_turned_in,
+                      color: Colors.green,
+                      onTap: () {
+                        _goToTasksByStatus('Done');
+                      }),
                 ],
               ),
               kVerticalSpace(30),
@@ -107,33 +120,102 @@ class HomePage extends StatelessWidget {
   Widget _displayTodayTasks() {
     return GetX<TaskController>(
       builder: (controller) {
-        final tasks = controller.tasksList;
+        final tasks = controller.todayTasksList;
         return SizedBox(
-          height: 210,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: tasks.length,
-            itemBuilder: (ctx, index) {
-              final task = tasks[index];
-              final today = DateFormat.yMd().format(DateTime.now());
-
-              if (task.date == today) {
-                return InkWell(
-                  borderRadius: BorderRadius.circular(16),
-                  onTap: () {
-                    Get.toNamed(
-                      MyRoutes.getDetailRoute(),
-                      arguments: {'task': task},
-                    );
-                  },
-                  child: TodayTaskTile(task: task),
-                );
-              }
-              return Container();
-            },
-          ),
+          height: tasks.isEmpty ? 180 : 210,
+          child:
+              tasks.isEmpty ? _doNotHaveTaskToday() : _hasTaskForToday(tasks),
         );
       },
+    );
+  }
+
+  Widget _doNotHaveTaskToday() {
+    return Container(
+      width: Get.width,
+      height: 180,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.amber.withOpacity(0.35),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "You don't have task \nfor today!",
+              style: kTextStyleBlack(23),
+              textAlign: TextAlign.center,
+            ),
+            TextButton(
+              onPressed: () {
+                Get.toNamed(MyRoutes.getCreateTaskRoute());
+              },
+              child: Text(
+                "Click Here to Create One",
+                style: kTextStyleBoldBlack(20),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _hasTaskForToday(List<TaskModel> tasks) {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: tasks.length,
+      itemBuilder: (ctx, index) {
+        final task = tasks[index];
+        return InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            Get.toNamed(
+              MyRoutes.getDetailRoute(),
+              arguments: {'task': task},
+            );
+          },
+          child: TodayTaskTile(task: task),
+        );
+      },
+    );
+  }
+
+  Widget _doNotHaveTaskForMonth() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "You don't have tasks for",
+          style: kTextStyleBoldBlack(30),
+        ),
+        Row(
+          children: [
+            Text(
+              "this month yet!",
+              style: kTextStyleBoldBlack(30),
+            ),
+            TextButton(
+              onPressed: () {
+                Get.toNamed(MyRoutes.getCreateTaskRoute());
+              },
+              child: Text(
+                "Create One",
+                style: kTextStyleBoldAmber(20),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  _goToTasksByStatus(String status) {
+    Get.toNamed(
+      MyRoutes.getTasksByStatusRoute(),
+      arguments: {'status': status},
     );
   }
 }

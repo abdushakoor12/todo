@@ -27,7 +27,7 @@ class TaskTile extends StatelessWidget {
                 Text(
                   task.description.toString(),
                   style: kTextStyleBoldGrey(16),
-                  maxLines: 3,
+                  maxLines: 2,
                 ),
                 Text(task.time.toString(), style: kTextStyleBoldBlack(20)),
               ],

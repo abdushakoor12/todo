@@ -32,6 +32,7 @@ class _AllTasksPageState extends State<AllTasksPage> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const AllTaskHeader(),
               kVerticalSpace(30),
@@ -49,7 +50,6 @@ class _AllTasksPageState extends State<AllTasksPage> {
     return Obx(
       () {
         final tasks = _taskController.tasksList;
-
         return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -78,7 +78,6 @@ class _AllTasksPageState extends State<AllTasksPage> {
 
   Widget _addDateBar() {
     return Container(
-      margin: const EdgeInsets.only(right: 8),
       decoration: BoxDecoration(
         color: Colors.amber.withOpacity(0.2),
         borderRadius: BorderRadius.circular(16),
