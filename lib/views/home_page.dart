@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/utils/routes.dart';
 import 'package:todo/widgets/home/app_bar.dart';
+import 'package:todo/widgets/home/drawer.dart';
 import 'package:todo/widgets/home/task_status.dart';
 import 'package:todo/widgets/home/today_task_tile.dart';
 import '../controllers/task_controller.dart';
@@ -11,20 +12,27 @@ import '../models/task_model.dart';
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _controller = TextEditingController();
   final TaskController _taskController = Get.put(TaskController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
+      drawer: const MyDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const MyAppBar(),
+              MyAppBar(
+                pressToOpenDrawer: () {
+                  _scaffoldKey.currentState?.openDrawer();
+                },
+              ),
               kVerticalSpace(40),
               Text(
                 '${showGreeting()}, Bersyte!',
@@ -33,9 +41,6 @@ class HomePage extends StatelessWidget {
               GetX<TaskController>(
                 builder: (controller) {
                   final tasks = controller.tasksList;
-                  for (var task in tasks) {
-                    changeTaskStatusAutomatically(task);
-                  }
                   return tasks.isEmpty
                       ? _doNotHaveTaskForMonth()
                       : Text(
@@ -45,55 +50,9 @@ class HomePage extends StatelessWidget {
                 },
               ),
               kVerticalSpace(30),
-              Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Center(
-                  child: TextField(
-                    controller: _controller,
-                    style: kTextStyleBoldBlack(22.0),
-                    maxLines: 1,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      hintText: 'Search a task...',
-                      prefixIcon: const Icon(Icons.search, size: 30),
-                      hintStyle: kTextStyleBoldGrey(20.0),
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-              ),
+              _textFieldForSearchTasks(),
               kVerticalSpace(30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TaskStatusContainer(
-                    label: 'To-Do',
-                    iconData: Icons.assignment_rounded,
-                    color: Colors.pink,
-                    onTap: () {
-                      _goToTasksByStatus('To-Do');
-                    },
-                  ),
-                  TaskStatusContainer(
-                      label: 'Progress',
-                      iconData: Icons.assignment_late_rounded,
-                      color: Colors.amber,
-                      onTap: () {
-                        _goToTasksByStatus('In Progress');
-                      }),
-                  TaskStatusContainer(
-                      label: 'Done',
-                      iconData: Icons.assignment_turned_in,
-                      color: Colors.green,
-                      onTap: () {
-                        _goToTasksByStatus('Done');
-                      }),
-                ],
-              ),
+              _showTaskStatusRow(),
               kVerticalSpace(30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -213,6 +172,60 @@ class HomePage extends StatelessWidget {
             ],
           )
         ],
+      ),
+    );
+  }
+
+  Widget _showTaskStatusRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        TaskStatusContainer(
+          label: 'To-Do',
+          iconData: Icons.assignment_rounded,
+          color: Colors.pink,
+          onTap: () {
+            _goToTasksByStatus('To-Do');
+          },
+        ),
+        TaskStatusContainer(
+            label: 'Progress',
+            iconData: Icons.assignment_late_rounded,
+            color: Colors.amber,
+            onTap: () {
+              _goToTasksByStatus('In Progress');
+            }),
+        TaskStatusContainer(
+            label: 'Done',
+            iconData: Icons.assignment_turned_in,
+            color: Colors.green,
+            onTap: () {
+              _goToTasksByStatus('Done');
+            }),
+      ],
+    );
+  }
+
+  Widget _textFieldForSearchTasks() {
+    return Container(
+      height: 70,
+      decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Center(
+        child: TextField(
+          controller: _controller,
+          style: kTextStyleBoldBlack(22.0),
+          maxLines: 1,
+          autocorrect: false,
+          decoration: InputDecoration(
+            hintText: 'Search a task...',
+            prefixIcon: const Icon(Icons.search, size: 30),
+            hintStyle: kTextStyleBoldGrey(20.0),
+            border: InputBorder.none,
+          ),
+        ),
       ),
     );
   }

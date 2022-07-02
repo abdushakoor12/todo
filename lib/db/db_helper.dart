@@ -6,8 +6,17 @@ import 'package:todo/models/task_model.dart';
 
 class DBHelper {
   static const int _version = 1;
-  static const String _tableName = "tasks1";
+  static const String _tableName = "tasks3";
   static Database? _db;
+  static const _columnId = "id";
+  static const _columnTitle = "title";
+  static const _columnDescription = "description";
+  static const _columnTime = "time";
+  static const _columnDate = "date";
+  static const _columnStatus = "status";
+  static const _columnIsDone = "isDone";
+  static const _columnIsFavorite = "isFavorite";
+  static const _columnColor = "color";
 
   static Future<void> initDatabase() async {
     if (_db != null) {
@@ -15,22 +24,24 @@ class DBHelper {
     }
     try {
       final dbPath = await getDatabasesPath();
-      String path = '$dbPath tasks1.db';
+      String path = '$dbPath $_tableName.db';
 
       _db = await openDatabase(
         path,
         version: _version,
         onCreate: (db, version) {
+          print("Creating DB");
           return db.execute(
             "CREATE TABLE $_tableName("
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            "title STRING,"
-            "description TEXT,"
-            "date STRING, "
-            "time STRING,"
-            "isDone INTEGER, "
-            "color INTEGER, "
-            "status STRING "
+            "$_columnId INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "$_columnTitle STRING,"
+            "$_columnDescription TEXT,"
+            "$_columnDate STRING, "
+            "$_columnTime STRING,"
+            "$_columnIsDone INTEGER, "
+            "$_columnColor INTEGER, "
+            "$_columnStatus STRING,"
+            "$_columnIsFavorite INTEGER "
             ")",
           );
         },
@@ -57,8 +68,28 @@ class DBHelper {
   static Future<void> update(int id) async {
     await _db!.rawUpdate('''
     UPDATE $_tableName
-    SET isDone = ?
+    SET $_columnIsDone = ?
     WHERE id =?
     ''', [1, id]);
+  }
+
+  static Future<void> updateFav(int id) async {
+    await _db!.rawUpdate('''
+    UPDATE $_tableName
+    SET $_columnIsFavorite = ?
+    WHERE id =?
+    ''', [1, id]);
+  }
+
+  static Future<void> updateTaskStatus(int id, String status) async {
+    await _db!.rawUpdate('''
+    UPDATE $_tableName
+    SET $_columnStatus = ?
+    WHERE id =?
+    ''', [status, id]);
+  }
+
+  static Future<List<Map<String, dynamic>>> queryTaskById(int id) async {
+    return await _db!.query(_tableName, where: '$_columnId=?', whereArgs: [id]);
   }
 }

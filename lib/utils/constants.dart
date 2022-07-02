@@ -94,16 +94,6 @@ String showGreeting() {
   return 'Good Night';
 }
 
-changeTaskStatusAutomatically(TaskModel task) {
-  final date = DateFormat.yMd().format(DateTime.now());
-  var time = formattingTimeOfDay(TimeOfDay.now());
-  if (task.date == date && task.time == time) {
-    print('In Progress');
-  }
-
-  print('Task id${task.id} Time:${task.time} == Now Time:$time');
-  print('Task id${task.id} Date : ${task.date} == Now Date : $date');
-}
 
 String formattingTimeOfDay(TimeOfDay timeOfDay) {
   final now = DateTime.now();

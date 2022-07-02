@@ -3,7 +3,11 @@ import 'package:get/get.dart';
 import 'package:todo/utils/constants.dart';
 
 class TaskDetailHeader extends StatelessWidget {
-  const TaskDetailHeader({Key? key}) : super(key: key);
+  const TaskDetailHeader({Key? key, this.onTap, required this.isFav})
+      : super(key: key);
+
+  final VoidCallback? onTap;
+  final int isFav;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +26,10 @@ class TaskDetailHeader extends StatelessWidget {
         ),
         _customCircleContainer(
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.edit, size: 24),
+            onPressed: onTap,
+            icon: isFav == 1
+                ? const Icon(Icons.favorite_outlined, size: 24)
+                : const Icon(Icons.favorite_border, size: 24),
           ),
         )
       ],

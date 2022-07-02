@@ -7,6 +7,7 @@ class TaskModel {
   String? time;
   int? color;
   String? status;
+  int? isFavorite;
 
   TaskModel({
     this.id,
@@ -17,6 +18,7 @@ class TaskModel {
     this.time,
     this.color,
     this.status,
+    this.isFavorite,
   });
 
   TaskModel.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,7 @@ class TaskModel {
     time = json['time'];
     color = json['color'];
     status = json['status'];
+    isFavorite = json['isFavorite'];
   }
 
   Map<String, dynamic> toJson() {
@@ -40,6 +43,7 @@ class TaskModel {
     data['time'] = time;
     data['color'] = color;
     data['status'] = status;
+    data['isFavorite'] = isFavorite;
     return data;
   }
 }

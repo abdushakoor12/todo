@@ -6,6 +6,7 @@ import 'package:todo/models/task_model.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/utils/routes.dart';
 import 'package:todo/widgets/create_task/custom_text_field.dart';
+import 'package:todo/widgets/custom_button.dart';
 import '../widgets/create_task/create_task_header.dart';
 
 class CreateTaskPage extends StatefulWidget {
@@ -87,12 +88,16 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         _descriptionController.text.isNotEmpty) {
       _createTask();
     } else {
-      Get.snackbar(
-        'Empty field',
-        'Task title and description can\'t be empty',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
+      Get.defaultDialog(
+        title: 'Empty field',
+        middleText: 'Task title and description \ncannot be empty',
+        titleStyle: kTextStyleBoldBlack(24),
+        cancel: CustomButton(
+          onTap: () => Get.back(),
+          label: 'OKAY',
+          color: Colors.red.withOpacity(0.3),
+        ),
+        backgroundColor: Colors.amber,
       );
     }
   }
@@ -102,6 +107,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       title: _titleController.text.trim(),
       description: _descriptionController.text.trim(),
       isDone: 0,
+      isFavorite: 0,
       date: DateFormat.yMd().format(_selectedDate),
       time: formattingTimeOfDay(_selectedTime),
       color: _selectedColor,

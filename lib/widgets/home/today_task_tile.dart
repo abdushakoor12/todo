@@ -28,9 +28,18 @@ class TodayTaskTile extends StatelessWidget {
             Text(task.description.toString(),
                 style: kTextStyleBoldBlack(16), maxLines: 2),
             Text(task.time.toString(), style: kTextStyleBoldWhite(16)),
-            Text(
-              task.status.toString(),
-              style: kTextStyleBoldWhite(20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  task.status.toString(),
+                  style: kTextStyleBoldWhite(20),
+                ),
+                Icon(
+                  task.isFavorite == 1 ? Icons.favorite_outlined : null,
+                  color: colors[task.color as int],
+                )
+              ],
             ),
           ],
         ),

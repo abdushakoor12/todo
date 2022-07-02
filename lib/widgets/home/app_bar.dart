@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:todo/utils/constants.dart';
 
 class MyAppBar extends StatelessWidget {
-  const MyAppBar({Key? key}) : super(key: key);
+  const MyAppBar({Key? key, this.pressToOpenDrawer}) : super(key: key);
 
+  final VoidCallback? pressToOpenDrawer;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -12,9 +13,9 @@ class MyAppBar extends StatelessWidget {
         CircleAvatar(
           radius: 25,
           child: IconButton(
-            onPressed: () {
-              print('Open Drawer Home page header');
-            },
+            onPressed: pressToOpenDrawer,
+            //print('Open Drawer Home page header');
+            //},
             icon: const Icon(Icons.menu_outlined),
           ),
         ),

@@ -22,7 +22,16 @@ class TaskDetail extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const TaskDetailHeader(),
+              TaskDetailHeader(
+                onTap: task.isFavorite == 1
+                    ? null
+                    : () {
+                        final int id = task.id as int;
+                        _taskController.updateTaskAsFav(id);
+                        Get.back();
+                      },
+                isFav: task.isFavorite as int,
+              ),
               kVerticalSpace(25),
               Text(
                 task.title.toString(),
@@ -61,9 +70,12 @@ class TaskDetail extends StatelessWidget {
               ),
               kVerticalSpace(25),
               _customRow(
-                  color: color,
-                  label: 'Status: ${task.status}',
-                  icon: Icons.incomplete_circle),
+                color: color,
+                label: 'Status: ${task.status}',
+                icon: task.status == 'Done'
+                    ? Icons.done
+                    : Icons.incomplete_circle,
+              ),
               kVerticalSpace(25),
               Text(
                 'Description',
@@ -85,7 +97,10 @@ class TaskDetail extends StatelessWidget {
                       onTap: task.isDone == 1
                           ? null
                           : () {
-                              _taskController.updateTaskAsDone(task.id as int);
+                              final int id = task.id as int;
+                              _taskController.updateTaskAsDone(id);
+                              _taskController.updateTaskStatus(id, 'Done');
+                              Get.back();
                             },
                     ),
                   ),

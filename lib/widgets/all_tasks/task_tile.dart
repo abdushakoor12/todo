@@ -26,7 +26,7 @@ class TaskTile extends StatelessWidget {
                 ),
                 Text(
                   task.description.toString(),
-                  style: kTextStyleBoldGrey(16),
+                  style: kTextStyleBlack(16),
                   maxLines: 2,
                 ),
                 Text(task.time.toString(), style: kTextStyleBoldBlack(20)),
@@ -59,7 +59,7 @@ class TaskTile extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
-        color: colors[task.color as int].withOpacity(0.2),
+        color: colors[task.color as int].withOpacity(0.5),
         borderRadius: BorderRadius.circular(16),
       ),
       child: child,

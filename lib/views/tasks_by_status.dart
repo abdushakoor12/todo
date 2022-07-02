@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:todo/controllers/task_controller.dart';
 import 'package:todo/utils/constants.dart';
-
 import '../utils/routes.dart';
 import '../widgets/all_tasks/task_tile.dart';
 
@@ -41,7 +39,10 @@ class TasksByStatus extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text('Tasks $status', style: kTextStyleBoldBlack(22)),
+                  Text(
+                    status == "Favorite" ? 'Favorites' : 'Tasks $status',
+                    style: kTextStyleBoldBlack(22),
+                  ),
                   Container(),
                 ],
               ),
@@ -65,6 +66,17 @@ class TasksByStatus extends StatelessWidget {
         itemBuilder: (ctx, index) {
           final task = tasks[index];
           if (task.status == status) {
+            return InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () {
+                Get.toNamed(
+                  MyRoutes.getDetailRoute(),
+                  arguments: {'task': task},
+                );
+              },
+              child: TaskTile(task: task),
+            );
+          } else if (status == 'Favorite' && task.isFavorite == 1) {
             return InkWell(
               borderRadius: BorderRadius.circular(16),
               onTap: () {
