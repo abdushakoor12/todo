@@ -105,6 +105,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       date: DateFormat.yMd().format(_selectedDate),
       time: formattingTimeOfDay(_selectedTime),
       color: _selectedColor,
+      status: 'To-Do',
     );
     await _taskController.addTask(newTask).then((value) => {
           Get.snackbar(

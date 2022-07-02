@@ -184,31 +184,36 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _doNotHaveTaskForMonth() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "You don't have tasks for",
-          style: kTextStyleBoldBlack(30),
-        ),
-        Row(
-          children: [
-            Text(
-              "this month yet!",
-              style: kTextStyleBoldBlack(30),
-            ),
-            TextButton(
-              onPressed: () {
-                Get.toNamed(MyRoutes.getCreateTaskRoute());
-              },
-              child: Text(
-                "Create One",
-                style: kTextStyleBoldAmber(20),
+    return SizedBox(
+      width: Get.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "You don't have tasks for",
+            style: kTextStyleBoldBlack(30),
+          ),
+          Row(
+            children: [
+              Text(
+                "this month yet!",
+                style: kTextStyleBoldBlack(30),
               ),
-            ),
-          ],
-        )
-      ],
+              Flexible(
+                child: TextButton(
+                  onPressed: () {
+                    Get.toNamed(MyRoutes.getCreateTaskRoute());
+                  },
+                  child: Text(
+                    "Create One",
+                    style: kTextStyleBoldAmber(20),
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 

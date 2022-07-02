@@ -6,6 +6,7 @@ class TaskModel {
   String? date;
   String? time;
   int? color;
+  String? status;
 
   TaskModel({
     this.id,
@@ -15,6 +16,7 @@ class TaskModel {
     this.date,
     this.time,
     this.color,
+    this.status,
   });
 
   TaskModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +27,7 @@ class TaskModel {
     date = json['date'];
     time = json['time'];
     color = json['color'];
+    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -36,6 +39,7 @@ class TaskModel {
     data['date'] = date;
     data['time'] = time;
     data['color'] = color;
+    data['status'] = status;
     return data;
   }
 }

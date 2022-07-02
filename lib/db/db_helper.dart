@@ -6,7 +6,7 @@ import 'package:todo/models/task_model.dart';
 
 class DBHelper {
   static const int _version = 1;
-  static const String _tableName = "tasks";
+  static const String _tableName = "tasks1";
   static Database? _db;
 
   static Future<void> initDatabase() async {
@@ -15,7 +15,7 @@ class DBHelper {
     }
     try {
       final dbPath = await getDatabasesPath();
-      String path = '$dbPath tasks.db';
+      String path = '$dbPath tasks1.db';
 
       _db = await openDatabase(
         path,
@@ -29,7 +29,8 @@ class DBHelper {
             "date STRING, "
             "time STRING,"
             "isDone INTEGER, "
-            "color INTEGER"
+            "color INTEGER, "
+            "status STRING "
             ")",
           );
         },
