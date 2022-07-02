@@ -41,7 +41,7 @@ class TaskTile extends StatelessWidget {
             child: RotatedBox(
               quarterTurns: 3,
               child: Text(
-                task.isDone == 0 ? 'Progress' : 'Done',
+                task.status.toString(),
                 style: kTextStyleBoldBlack(20),
               ),
             ),

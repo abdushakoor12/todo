@@ -29,7 +29,7 @@ class TodayTaskTile extends StatelessWidget {
                 style: kTextStyleBoldBlack(16), maxLines: 2),
             Text(task.time.toString(), style: kTextStyleBoldWhite(16)),
             Text(
-              task.isDone == 0 ? 'Progress' : 'Done',
+              task.status.toString(),
               style: kTextStyleBoldWhite(20),
             ),
           ],

@@ -46,7 +46,7 @@ class TasksByStatus extends StatelessWidget {
                 ],
               ),
               kVerticalSpace(20),
-              _displayTasks(),
+              _displayTasks(status),
             ],
           ),
         ),
@@ -54,7 +54,7 @@ class TasksByStatus extends StatelessWidget {
     );
   }
 
-  Widget _displayTasks() {
+  Widget _displayTasks(String status) {
     return Obx(() {
       final tasks = _taskController.tasksList;
 
@@ -64,20 +64,19 @@ class TasksByStatus extends StatelessWidget {
         itemCount: tasks.length,
         itemBuilder: (ctx, index) {
           final task = tasks[index];
-          //final selectedDate = DateFormat.yMd().format(DateTime.now());
-          //if (task.date == selectedDate) {
-          return InkWell(
-            borderRadius: BorderRadius.circular(16),
-            onTap: () {
-              Get.toNamed(
-                MyRoutes.getDetailRoute(),
-                arguments: {'task': task},
-              );
-            },
-            child: TaskTile(task: task),
-          );
-          //}
-          //return Container();
+          if (task.status == status) {
+            return InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () {
+                Get.toNamed(
+                  MyRoutes.getDetailRoute(),
+                  arguments: {'task': task},
+                );
+              },
+              child: TaskTile(task: task),
+            );
+          }
+          return Container();
         },
       );
     });

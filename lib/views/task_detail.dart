@@ -13,6 +13,7 @@ class TaskDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final task = Get.arguments['task'] as TaskModel;
+    final Color color = colors[task.color as int];
 
     return Scaffold(
       body: SafeArea(
@@ -31,15 +32,19 @@ class TaskDetail extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _customRow(task.date.toString(), Icons.calendar_month_sharp),
+                  _customRow(
+                    color: color,
+                    label: task.date.toString(),
+                    icon: Icons.calendar_month_sharp,
+                  ),
                   Container(
                     margin: const EdgeInsets.only(right: 8),
                     decoration: BoxDecoration(
-                      color: colors[task.color as int].withOpacity(0.2),
+                      color: color.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
                         width: 1,
-                        color: colors[task.color as int],
+                        color: color,
                       ),
                     ),
                     child: const SizedBox(
@@ -47,9 +52,18 @@ class TaskDetail extends StatelessWidget {
                       height: 20,
                     ),
                   ),
-                  _customRow(task.time.toString(), Icons.access_time_rounded),
+                  _customRow(
+                    color: color,
+                    label: task.time.toString(),
+                    icon: Icons.access_time_rounded,
+                  ),
                 ],
               ),
+              kVerticalSpace(25),
+              _customRow(
+                  color: color,
+                  label: 'Status: ${task.status}',
+                  icon: Icons.incomplete_circle),
               kVerticalSpace(25),
               Text(
                 'Description',
@@ -95,10 +109,14 @@ class TaskDetail extends StatelessWidget {
     );
   }
 
-  _customRow(String label, IconData icon) {
+  _customRow(
+      {required String label, required IconData icon, required Color color}) {
     return Row(
       children: [
-        Icon(icon),
+        Icon(
+          icon,
+          color: color,
+        ),
         const SizedBox(width: 10),
         Text(label, style: kTextStyleBlack(18)),
       ],
