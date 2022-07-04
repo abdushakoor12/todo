@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:todo/db/db_helper.dart';
 import 'package:todo/models/task_model.dart';
 
@@ -10,7 +11,7 @@ class TaskController extends GetxController {
   var tasksList = <TaskModel>[].obs;
   var todayTasksList = <TaskModel>[].obs;
   int get tasksLength => tasksList.length;
-  List<TaskModel> taskById = <TaskModel>[].obs;
+  //List<TaskModel> taskById = <TaskModel>[].obs;
 
   @override
   void onInit() {
@@ -74,6 +75,13 @@ class TaskController extends GetxController {
   void updateTaskStatus(int id, String status) async {
     await DBHelper.updateTaskStatus(id, status);
     getAllTasks();
+  }
+
+  void shareTask({required String title, required String description}) async {
+    await Share.share(
+      'Title: $title\n$description',
+      subject: 'Share Task: $title',
+    );
   }
 
   // void getTaskById(int id) async {

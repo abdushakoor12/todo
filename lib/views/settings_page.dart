@@ -25,9 +25,9 @@ class SettingsPage extends StatelessWidget {
               kVerticalSpace(20),
               _iconTextRow(icon: Icons.person, label: 'Username'),
               _displayName(context),
-              const Divider(thickness: 2, color: Colors.amber),
-              Text('Get in Touch With Dev', style: kTextStyleBlack(22)),
-              const Divider(thickness: 2, color: Colors.amber),
+              Divider(thickness: 2, color: Colors.amber.withOpacity(0.3)),
+              Text('Get in Touch With Dev', style: kTextStyleBlack(20)),
+              Divider(thickness: 2, color: Colors.amber.withOpacity(0.3)),
               _iconTextRow(icon: FontAwesomeIcons.twitter, label: 'Twitter'),
               _iconTextRow(icon: FontAwesomeIcons.github, label: 'Github'),
               _iconTextRow(

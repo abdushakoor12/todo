@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:todo/controllers/task_controller.dart';
 import 'package:todo/models/task_model.dart';
 import 'package:todo/utils/constants.dart';
@@ -69,12 +70,34 @@ class TaskDetail extends StatelessWidget {
                 ],
               ),
               kVerticalSpace(25),
-              _customRow(
-                color: color,
-                label: 'Status: ${task.status}',
-                icon: task.status == 'Done'
-                    ? Icons.done
-                    : Icons.incomplete_circle,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _customRow(
+                    color: color,
+                    label: 'Status: ${task.status}',
+                    icon: task.status == 'Done'
+                        ? Icons.done
+                        : Icons.incomplete_circle,
+                  ),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () {
+                      _taskController.shareTask(
+                        title: task.title.toString(),
+                        description: task.description.toString(),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: _customRow(
+                        color: color,
+                        label: 'Share',
+                        icon: Icons.share,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               kVerticalSpace(25),
               Text(
@@ -133,7 +156,7 @@ class TaskDetail extends StatelessWidget {
           color: color,
         ),
         const SizedBox(width: 10),
-        Text(label, style: kTextStyleBlack(18)),
+        Text(label, style: kTextStyleBlack(18), softWrap: true),
       ],
     );
   }
