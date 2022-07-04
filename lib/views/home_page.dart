@@ -6,6 +6,7 @@ import 'package:todo/widgets/home/app_bar.dart';
 import 'package:todo/widgets/home/drawer.dart';
 import 'package:todo/widgets/home/task_status.dart';
 import 'package:todo/widgets/home/today_task_tile.dart';
+import '../controllers/setting_controller.dart';
 import '../controllers/task_controller.dart';
 import '../models/task_model.dart';
 
@@ -15,6 +16,7 @@ class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _controller = TextEditingController();
   final TaskController _taskController = Get.put(TaskController());
+  final SettingsController _settingController = Get.put(SettingsController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +36,13 @@ class HomePage extends StatelessWidget {
                 },
               ),
               kVerticalSpace(40),
-              Text(
-                '${showGreeting()}, Bersyte!',
-                style: kTextStyleBoldGrey(22.0),
-              ),
+              Obx(() {
+                final name = _settingController.username.value;
+                return Text(
+                  '${showGreeting()}, ${name.capitalize}',
+                  style: kTextStyleBoldGrey(22.0),
+                );
+              }),
               GetX<TaskController>(
                 builder: (controller) {
                   final tasks = controller.tasksList;

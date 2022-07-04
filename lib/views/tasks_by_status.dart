@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo/controllers/task_controller.dart';
 import 'package:todo/utils/constants.dart';
+import 'package:todo/widgets/custom_circle_container.dart';
 import '../utils/routes.dart';
 import '../widgets/all_tasks/task_tile.dart';
 
@@ -12,40 +13,13 @@ class TasksByStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status = Get.arguments['status'] as String;
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.amber.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        size: 28,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    status == "Favorite" ? 'Favorites' : 'Tasks $status',
-                    style: kTextStyleBoldBlack(22),
-                  ),
-                  Container(),
-                ],
-              ),
+              _header(status),
               kVerticalSpace(20),
               _displayTasks(status),
             ],
@@ -92,5 +66,60 @@ class TasksByStatus extends StatelessWidget {
         },
       );
     });
+  }
+
+  Widget _header(String status) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        CustomCircleContainer(
+          child: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              size: 28,
+            ),
+          ),
+        ),
+        Text(
+          status == "Favorite" ? 'Favorites Tasks' : 'Tasks $status',
+          style: kTextStyleBoldBlack(22),
+        ),
+        CustomCircleContainer(
+          child: _iconByStatus(status),
+        ),
+      ],
+    );
+  }
+
+  Widget _iconByStatus(String status) {
+    switch (status) {
+      case 'To-Do':
+        return const Icon(
+          Icons.assignment,
+          size: 24,
+        );
+      case 'In Progress':
+        return const Icon(
+          Icons.incomplete_circle,
+          size: 24,
+        );
+      case 'Done':
+        return const Icon(
+          Icons.done,
+          size: 24,
+        );
+      case 'Favorite':
+        return const Icon(
+          Icons.favorite,
+          size: 24,
+        );
+    }
+    return const Icon(
+      Icons.favorite,
+      size: 24,
+    );
   }
 }

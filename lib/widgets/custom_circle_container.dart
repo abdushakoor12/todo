@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CustomCircleContainer extends StatelessWidget {
   const CustomCircleContainer({Key? key, this.child}) : super(key: key);

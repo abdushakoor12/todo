@@ -76,8 +76,8 @@ class TaskController extends GetxController {
     getAllTasks();
   }
 
-  void getTaskById(int id) async {
-    List<Map<String, dynamic>> task = await DBHelper.queryTaskById(id);
-    taskById.assignAll(task.map((data) => TaskModel.fromJson(data)));
-  }
+  // void getTaskById(int id) async {
+  //   List<Map<String, dynamic>> task = await DBHelper.queryTaskById(id);
+  //   taskById.assignAll(task.map((data) => TaskModel.fromJson(data)));
+  // }
 }

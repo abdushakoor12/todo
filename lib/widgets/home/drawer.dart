@@ -44,7 +44,9 @@ class MyDrawer extends StatelessWidget {
                   Get.toNamed(MyRoutes.getCreateTaskRoute());
                 }),
                 kVerticalSpace(16),
-                _drawerItem(Icons.info, 'About App', () {}),
+                _drawerItem(Icons.settings, 'Settings', () {
+                  Get.toNamed(MyRoutes.getSettingsPageRoute());
+                }),
               ],
             ),
           )

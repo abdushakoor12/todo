@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo/utils/constants.dart';
+import 'package:todo/widgets/custom_circle_container.dart';
 
 class TaskDetailHeader extends StatelessWidget {
   const TaskDetailHeader({Key? key, this.onTap, required this.isFav})
@@ -14,8 +15,8 @@ class TaskDetailHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _customCircleContainer(
-          IconButton(
+        CustomCircleContainer(
+          child: IconButton(
             onPressed: () => Get.back(),
             icon: const Icon(Icons.arrow_back, size: 28),
           ),
@@ -24,8 +25,8 @@ class TaskDetailHeader extends StatelessWidget {
           'Task Detail',
           style: kTextStyleBoldBlack(24),
         ),
-        _customCircleContainer(
-          IconButton(
+        CustomCircleContainer(
+          child: IconButton(
             onPressed: onTap,
             icon: isFav == 1
                 ? const Icon(Icons.favorite_outlined, size: 24)
@@ -33,18 +34,6 @@ class TaskDetailHeader extends StatelessWidget {
           ),
         )
       ],
-    );
-  }
-
-  _customCircleContainer(Widget child) {
-    return Container(
-      height: 50,
-      width: 50,
-      decoration: BoxDecoration(
-        color: Colors.amber.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(25),
-      ),
-      child: child,
     );
   }
 }

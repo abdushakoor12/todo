@@ -41,7 +41,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
               kVerticalSpace(30),
               CustomTextField(
                 controller: _titleController,
-                label: ('Task title'),
+                label: 'Task title',
                 hintText: 'Task title',
               ),
               Row(

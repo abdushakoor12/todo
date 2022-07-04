@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/utils/constants.dart';
+import 'package:todo/widgets/custom_circle_container.dart';
 
 class MyAppBar extends StatelessWidget {
   const MyAppBar({Key? key, this.pressToOpenDrawer}) : super(key: key);
@@ -10,18 +11,14 @@ class MyAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        CircleAvatar(
-          radius: 25,
+        CustomCircleContainer(
           child: IconButton(
             onPressed: pressToOpenDrawer,
-            //print('Open Drawer Home page header');
-            //},
             icon: const Icon(Icons.menu_outlined),
           ),
         ),
         Text('Todo App', style: kTextStyleBoldBlack(24)),
-        const CircleAvatar(
-          radius: 25,
+        const CustomCircleContainer(
           child: Icon(Icons.person),
         ),
       ],
