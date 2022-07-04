@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:path/path.dart' as p;
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:todo/models/task_model.dart';
@@ -24,7 +24,7 @@ class DBHelper {
     }
     try {
       final dbPath = await getDatabasesPath();
-      String path = '$dbPath $_tableName.db';
+      String path = p.join(dbPath, '$_tableName.db');
 
       _db = await openDatabase(
         path,
@@ -79,6 +79,15 @@ class DBHelper {
     SET $_columnIsFavorite = ?
     WHERE id =?
     ''', [1, id]);
+  }
+
+  static Future<void> removeFav(int id) async {
+    await _db!.rawUpdate(
+      '''
+    UPDATE $_tableName 
+    SET $_columnIsFavorite = ? WHERE id =?''',
+      [0, id],
+    );
   }
 
   static Future<void> updateTaskStatus(int id, String status) async {

@@ -66,6 +66,11 @@ class TaskController extends GetxController {
     getAllTasks();
   }
 
+  void removeFromFav(int id) async {
+    await DBHelper.removeFav(id);
+    getAllTasks();
+  }
+
   void updateTaskStatus(int id, String status) async {
     await DBHelper.updateTaskStatus(id, status);
     getAllTasks();

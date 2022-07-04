@@ -14,6 +14,7 @@ class TaskDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final task = Get.arguments['task'] as TaskModel;
     final Color color = colors[task.color as int];
+    final int id = task.id as int;
 
     return Scaffold(
       body: SafeArea(
@@ -24,9 +25,11 @@ class TaskDetail extends StatelessWidget {
             children: [
               TaskDetailHeader(
                 onTap: task.isFavorite == 1
-                    ? null
+                    ? () {
+                        _taskController.removeFromFav(id);
+                        Get.back();
+                      }
                     : () {
-                        final int id = task.id as int;
                         _taskController.updateTaskAsFav(id);
                         Get.back();
                       },
@@ -51,10 +54,7 @@ class TaskDetail extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: color.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        width: 1,
-                        color: color,
-                      ),
+                      border: Border.all(width: 1, color: color),
                     ),
                     child: const SizedBox(
                       width: 20,
