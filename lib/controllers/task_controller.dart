@@ -11,7 +11,7 @@ class TaskController extends GetxController {
   var tasksList = <TaskModel>[].obs;
   var todayTasksList = <TaskModel>[].obs;
   int get tasksLength => tasksList.length;
-  //List<TaskModel> taskById = <TaskModel>[].obs;
+  var taskById = <TaskModel>[].obs;
 
   @override
   void onInit() {
@@ -84,8 +84,8 @@ class TaskController extends GetxController {
     );
   }
 
-  // void getTaskById(int id) async {
-  //   List<Map<String, dynamic>> task = await DBHelper.queryTaskById(id);
-  //   taskById.assignAll(task.map((data) => TaskModel.fromJson(data)));
-  // }
+  void getTaskById(int id) async {
+    List<Map<String, dynamic>> task = await DBHelper.queryTaskById(id);
+    taskById.assignAll(task.map((data) => TaskModel.fromJson(data)));
+  }
 }

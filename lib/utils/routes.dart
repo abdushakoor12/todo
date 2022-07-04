@@ -18,7 +18,7 @@ class MyRoutes {
   static String getHomeRoute() => _home;
   static String getAllTasksPageRoute() => _allTasks;
   static String getCreateTaskRoute() => _createTask;
-  static String getDetailRoute() => _taskDetail;
+  static String getTaskDetailRoute() => _taskDetail;
   static String getTasksByStatusRoute() => _tasksByStatus;
   static String getSettingsPageRoute() => _settingsPage;
 

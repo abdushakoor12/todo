@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:todo/controllers/task_controller.dart';
 import 'package:todo/models/task_model.dart';
 import 'package:todo/utils/constants.dart';
@@ -38,7 +37,7 @@ class TaskDetail extends StatelessWidget {
               ),
               kVerticalSpace(25),
               Text(
-                task.title.toString(),
+                '${task.title}',
                 style: kTextStyleBlack(24),
               ),
               kVerticalSpace(25),
@@ -47,7 +46,7 @@ class TaskDetail extends StatelessWidget {
                 children: [
                   _customRow(
                     color: color,
-                    label: task.date.toString(),
+                    label: '${task.date}',
                     icon: Icons.calendar_month_sharp,
                   ),
                   Container(
@@ -64,7 +63,7 @@ class TaskDetail extends StatelessWidget {
                   ),
                   _customRow(
                     color: color,
-                    label: task.time.toString(),
+                    label: '${task.time}',
                     icon: Icons.access_time_rounded,
                   ),
                 ],
@@ -84,8 +83,8 @@ class TaskDetail extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                     onTap: () {
                       _taskController.shareTask(
-                        title: task.title.toString(),
-                        description: task.description.toString(),
+                        title: '${task.title}',
+                        description: '${task.description}',
                       );
                     },
                     child: Padding(
@@ -105,7 +104,7 @@ class TaskDetail extends StatelessWidget {
                 style: kTextStyleBoldBlack(24),
               ),
               Text(
-                task.description.toString(),
+                '${task.description}',
                 style: kTextStyleBlack(18),
               ),
               kVerticalSpace(50),
@@ -120,7 +119,7 @@ class TaskDetail extends StatelessWidget {
                       onTap: task.isDone == 1
                           ? null
                           : () {
-                              final int id = task.id as int;
+                              //final int id = task?.id as int;
                               _taskController.updateTaskAsDone(id);
                               _taskController.updateTaskStatus(id, 'Done');
                               Get.back();

@@ -44,7 +44,7 @@ class TasksByStatus extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               onTap: () {
                 Get.toNamed(
-                  MyRoutes.getDetailRoute(),
+                  MyRoutes.getTaskDetailRoute(),
                   arguments: {'task': task},
                 );
               },
@@ -55,7 +55,7 @@ class TasksByStatus extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               onTap: () {
                 Get.toNamed(
-                  MyRoutes.getDetailRoute(),
+                  MyRoutes.getTaskDetailRoute(),
                   arguments: {'task': task},
                 );
               },

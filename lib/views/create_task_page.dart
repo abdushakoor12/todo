@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/controllers/task_controller.dart';
 import 'package:todo/models/task_model.dart';
+import 'package:todo/services/notification_service.dart';
 import 'package:todo/utils/constants.dart';
 import 'package:todo/utils/routes.dart';
 import 'package:todo/widgets/create_task/custom_text_field.dart';
@@ -23,9 +24,12 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   TimeOfDay _selectedTime = TimeOfDay.now();
   DateTime _selectedDate = DateTime.now();
   int _selectedColor = 0;
+  final NotificationService _notificationService = NotificationService();
 
   @override
   Widget build(BuildContext context) {
+    _notificationService.initNotification();
+    _notificationService.requestIOSPermission();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -113,16 +117,16 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       color: _selectedColor,
       status: 'To-Do',
     );
-    await _taskController.addTask(newTask).then((value) => {
-          Get.snackbar(
-            'Task Saved',
-            'Task successfully saved',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.green,
-            colorText: Colors.white,
-          ),
-          Get.offAllNamed(MyRoutes.getHomeRoute())
-        });
+    final int id = await _taskController.addTask(newTask);
+    Get.snackbar(
+      'Task Saved',
+      'Task successfully saved',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+    );
+    _notificationService.scheduleNotification(newTask, id);
+    Get.offAllNamed(MyRoutes.getHomeRoute());
   }
 
   _chooseTime() async {
